@@ -3,8 +3,10 @@ let nodeifyit = require('nodeifyit')
 require('songbird')
 
 function useExternalPassportStrategy(OauthStrategy, config, field) {
-  passport.use(new OauthStrategy(config,
-    nodeifyit(async (req, token, tokenSecretOrRefreshToken, account) => {
+  config.passReqToCallback = true
+  passport.use(new OauthStrategy(config, nodeifyit(authCB, {spread: true}))
+
+  async authCB(req, token, _ignored_, account) {
       // 1. Load user from store
       // 2. If req.user exists, we're authorizing (connecting an account)
       // 2a. Ensure it's not associated with another account
@@ -12,7 +14,7 @@ function useExternalPassportStrategy(OauthStrategy, config, field) {
       // 3. If not, we're authenticating (logging in)
       // 3a. If user exists, we're logging in via the 3rd party account
       // 3b. Otherwise create a user associated with the 3rd party account
-  })))
+  }
 }
 
 function configure(config) {
@@ -31,6 +33,8 @@ function configure(config) {
   // useExternalPassportStrategy(LinkedInStrategy, {...}, 'twitter')
   // passport.use('local-login', new LocalStrategy({...}, (req, email, password, callback) => {...}))
   // passport.use('local-signup', new LocalStrategy({...}, (req, email, password, callback) => {...}))
+
+  return passport
 }
 
 module.exports = {passport, configure}
