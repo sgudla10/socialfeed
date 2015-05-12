@@ -16,6 +16,7 @@
     "lodash": "^3.8.0",
     "mongoose": "^4.0.2",
     "morgan": "^1.0.0",
+    "nodeifyit": "^1.0.1",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "require-dir": "^0.3.0",
