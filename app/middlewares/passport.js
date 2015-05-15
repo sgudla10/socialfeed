@@ -4,9 +4,9 @@ require('songbird')
 
 function useExternalPassportStrategy(OauthStrategy, config, field) {
   config.passReqToCallback = true
-  passport.use(new OauthStrategy(config, nodeifyit(authCB, {spread: true}))
+  passport.use(new OauthStrategy(config, nodeifyit(authCB, {spread: true})))
 
-  async authCB(req, token, _ignored_, account) {
+  async function authCB(req, token, _ignored_, account) {
       // 1. Load user from store
       // 2. If req.user exists, we're authorizing (connecting an account)
       // 2a. Ensure it's not associated with another account
