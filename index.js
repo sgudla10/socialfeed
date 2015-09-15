@@ -10,13 +10,14 @@ let flash = require('connect-flash')
 
 let passportMiddleware = require('./app/middlewares/passport')
 
-const NODE_ENV = process.env.NODE_ENV
+const NODE_ENV = "development"
+console.log("NODE_ENV IS "+NODE_ENV)
 
 let app = express(),
-  config = requireDir('./config', {recurse: true}),
+config = requireDir('./config', {recurse: true}),
   port = process.env.PORT || 8000
 
-passportMiddleware.configure(config.auth[NODE_ENV])
+passportMiddleware.configure(config.auth)
 app.passport = passportMiddleware.passport
 
 // connect to the database
@@ -49,4 +50,6 @@ app.use(flash())
 require('./app/routes')(app)
 
 // start server
-app.listen(port, ()=> console.log(`Listening @ http://127.0.0.1:${port}`))
+app.listen(port,()=> console.log(`Listening @ http://127.0.0.1:${port}`))
+
+//app.listen(port,'socialauthenticator.com')
