@@ -20,6 +20,9 @@ Required
 
 
 
+![GIF](walkthrough.gif)
+
+
 
 
 
